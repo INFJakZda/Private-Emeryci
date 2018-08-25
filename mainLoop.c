@@ -20,7 +20,7 @@ void mainLoop()
         {
             *(askTab + i) = READY_ASK_TAB;
             if (i == rank)
-                *(askTab + i) = MY_GROUP;
+                *(askTab + i) = ACCEPT_ASK_TAB;
         }
 
         data send;
@@ -74,7 +74,7 @@ void mainLoop()
             {
                 for (int i = 0; i < noMembers; i++)
                 {
-                    if (*(askTab + i) == MY_GROUP && i != rank)
+                    if (*(askTab + i) == ACCEPT_ASK_TAB && i != rank)
                     {
                         lamportClock++;
                         send = createPackage(lamportClock, GROUP_BREAK_MSG, rank, clubNumber, memberMoney);
@@ -112,7 +112,7 @@ void mainLoop()
                 {
                     for (int i = 0; i < noMembers; i++)
                     {
-                        if (*(askTab + i) == MY_GROUP && i != rank)
+                        if (*(askTab + i) == ACCEPT_ASK_TAB && i != rank)
                         {
                             lamportClock++;
                             send = createPackage(lamportClock, EXIT_CLUB_MSG, rank, clubNumber, memberMoney);
@@ -122,7 +122,7 @@ void mainLoop()
                     }
                     for (int i = 0; i < noMembers; i++)
                     {
-                        if (i != rank && *(askTab + i) != MY_GROUP)
+                        if (i != rank && *(askTab + i) != ACCEPT_ASK_TAB)
                         {
                             lamportClock++;
                             send = createPackage(lamportClock, ENTER_PERMISSION, rank, clubNumber, memberMoney);

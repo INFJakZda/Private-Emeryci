@@ -31,7 +31,7 @@
 
 //TAB
 #define READY_ASK_TAB 0
-#define MY_GROUP 1
+#define ACCEPT_ASK_TAB 1
 #define NOT_MY_GROUP -1
 
 //TAG

@@ -45,7 +45,7 @@ void *ThreadBehavior()
         if (myStatus == FOUNDER && recv.message == GROUP_CONFIRMATION)
         {
             groupMoney += recv.memberMoney;
-            *(askTab + recv.rank) = MY_GROUP;
+            *(askTab + recv.rank) = ACCEPT_ASK_TAB;
             myStatus = ACCEPT_INVITE;
             printf("[%d][%ld]RANK: %d dalacza do grupy!\n", rank, lamportClock, recv.rank);
             printf("[%d][%ld]Jestem kapitanem, mamy na razie: %d a potrzeba %d pieniedzy.\n", rank, lamportClock, groupMoney, entryCost);
@@ -103,7 +103,7 @@ void *ThreadBehavior()
         if (myStatus == NO_GROUP && recv.message == GROUP_CONFIRMATION)
         {
             myStatus = ACCEPT_INVITE;
-            *(askTab + recv.rank) = MY_GROUP;
+            *(askTab + recv.rank) = ACCEPT_ASK_TAB;
             groupMoney += recv.memberMoney;
             printf("[%d][%ld]RANK: %d dalacza do grupy!\n", rank, lamportClock, recv.rank);
             printf("[%d][%ld]Jestem kapitanem, mamy na razie: %d a potrzeba %d pieniedzy.\n", rank, lamportClock, groupMoney, entryCost);
