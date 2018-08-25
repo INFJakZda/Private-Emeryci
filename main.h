@@ -37,7 +37,6 @@
 //TAG
 #define TAG 22
 
-
 //ZMIENNE WPOLDZILEONE
 extern int money;
 extern int groupMoney;
@@ -52,7 +51,8 @@ extern int rank;
 extern long lamportClock; //dopisać inkrementowanie zegara
 extern MPI_Datatype mpi_data;
 
-typedef struct data_s {
+typedef struct data_s
+{
         int lamportClock;
         int message;
         int rank;
@@ -62,7 +62,11 @@ typedef struct data_s {
 
 //BOOL
 typedef int bool;
-enum { false, true };
+enum
+{
+        false,
+        true
+};
 
 //FUNCTIONS
 void createThread();
@@ -71,6 +75,6 @@ int getRandomFreeElder();
 int max(int, int);
 void *ThreadBehavior();
 void mainLoop();
-data createPackage(int, int, int, int,int);
+data createPackage(int, int, int, int, int);
 
 #endif
