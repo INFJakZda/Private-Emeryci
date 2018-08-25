@@ -2,12 +2,14 @@
 
 void mainLoop()
 {
+    lamportClock = rand() % 4;
+    sleep(lamportClock);
     while (true)
     {
         bool restart = false;
         //Zmienne wspoldzielone
 
-        sleep(rand() % 4); // Konieczny sleep bo się rozpierdala
+        //sleep(rand() % 4); // Konieczny sleep bo się rozpierdala
 
         memberMoney = rand() % (entryCost - 2) + 1;
         groupMoney = memberMoney;
@@ -135,5 +137,6 @@ void mainLoop()
                 printf("[%d][%ld]        Kapitan wychodzi z klubu o nr: %d\n", rank, lamportClock, clubNumber);
             }
         }
+        sleep(rand() % 4);
     }
 }
