@@ -2,36 +2,36 @@
 
 data createPackage(int lC, int mcd, int rnk, int clubNum, int mny)
 {
-  data package;
+	data package;
 
-  package.lamportClock = lC;
-  package.message = mcd;
-  package.rank = rnk;
-  package.clubNumber = clubNum;
-  package.money = mny;
-  return package;
+	package.lamportClock = lC;
+	package.message = mcd;
+	package.rank = rnk;
+	package.clubNumber = clubNum;
+	package.memberMoney = mny;
+	return package;
 }
 
 void createThread()
 {
-    int create_result = 0;
+	int create_result = 0;
 
-    pthread_t thread1;
+	pthread_t thread1;
 
-    create_result = pthread_create(&thread1, NULL, ThreadBehavior, NULL);
-    if (create_result){
-       printf("Błąd przy próbie utworzenia wątku, kod błędu: %d\n", create_result);
-       exit(-1);
-    }
-
+	create_result = pthread_create(&thread1, NULL, ThreadBehavior, NULL);
+	if (create_result)
+	{
+		printf("Błąd przy próbie utworzenia wątku, kod błędu: %d\n", create_result);
+		exit(-1);
+	}
 }
 
 bool isSomeoneToAsk()
 {
-	for(int i=0;i<N;i++)
-  {
-		if(*(tab+i)==0)
-    {
+	for (int i = 0; i < noMembers; i++)
+	{
+		if (*(askTab + i) == 0)
+		{
 			return true;
 		}
 	}
@@ -40,20 +40,20 @@ bool isSomeoneToAsk()
 
 int getRandomFreeElder()
 {
-	int rnd = rand() % N;
-	if(*(tab+rnd)==0)
+	int rnd = rand() % noMembers;
+	if (*(askTab + rnd) == 0)
 		return rnd;
-	for(int i=rnd;i<N;i++)
-  {
-		if(*(tab+i)==0)
-    {
+	for (int i = rnd; i < noMembers; i++)
+	{
+		if (*(askTab + i) == 0)
+		{
 			return i;
 		}
 	}
-	for(int i=0;i<N;i++)
-  {
-		if(*(tab+i)==0)
-    {
+	for (int i = 0; i < noMembers; i++)
+	{
+		if (*(askTab + i) == 0)
+		{
 			return i;
 		}
 	}
@@ -62,7 +62,7 @@ int getRandomFreeElder()
 
 int max(int a, int b)
 {
-	if(a>b)
+	if (a > b)
 		return a;
 	else
 		return b;

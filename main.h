@@ -30,39 +30,43 @@
 #define EXIT_CLUB_MSG 6
 
 //TAB
-#define NOT_ASKED 0
-#define MY_GROUP 1
-#define NOT_MY_GROUP -1
+#define READY_ASK_TAB 0
+#define ACCEPT_ASK_TAB 1
+#define REJECT_ASK_TAB -1
 
 //TAG
 #define TAG 22
 
-
 //ZMIENNE WPOLDZILEONE
-extern int money;
+extern int memberMoney;
 extern int groupMoney;
 extern int approveCount;
-extern int status;
-extern int *tab;
-extern int N;
-extern int M;
-extern int K;
+extern int myStatus;
+extern int *askTab;
+extern int noMembers;
+extern int entryCost;
+extern int noClubs;
 extern int clubNumber;
 extern int rank;
 extern long lamportClock; //dopisać inkrementowanie zegara
 extern MPI_Datatype mpi_data;
 
-typedef struct data_s {
+typedef struct data_s
+{
         int lamportClock;
         int message;
         int rank;
         int clubNumber;
-        int money;
+        int memberMoney;
 } data;
 
 //BOOL
 typedef int bool;
-enum { false, true };
+enum
+{
+        false,
+        true
+};
 
 //FUNCTIONS
 void createThread();
@@ -71,6 +75,6 @@ int getRandomFreeElder();
 int max(int, int);
 void *ThreadBehavior();
 void mainLoop();
-data createPackage(int, int, int, int,int);
+data createPackage(int, int, int, int, int);
 
 #endif
