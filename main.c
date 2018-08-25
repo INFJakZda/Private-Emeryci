@@ -8,7 +8,7 @@ int myStatus;
 int *tab;
 int noMembers;
 int M;
-int K;
+int noClubs;
 int clubNumber;
 int rank;
 long lamportClock;
@@ -17,7 +17,7 @@ MPI_Datatype mpi_data;
 int main(int argc, char *argv[])
 {
   M = 100;
-  K = 4;
+  noClubs = 4;
 
   MPI_Init(&argc, &argv);
 

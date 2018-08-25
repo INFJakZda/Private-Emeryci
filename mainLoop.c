@@ -89,7 +89,7 @@ void mainLoop()
             {
                 printf("[%d][%ld]        Wybieramy klub!\n", rank, lamportClock);
                 myStatus = ENOUGH_MONEY;
-                clubNumber = rand() % K;
+                clubNumber = rand() % noClubs;
                 printf("[%d][%ld]        Wybralismy klub o nr: %d\n", rank, lamportClock, clubNumber);
                 for (int i = 0; i < noMembers; i++)
                 {
