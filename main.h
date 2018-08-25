@@ -42,7 +42,7 @@ extern int memberMoney;
 extern int groupMoney;
 extern int approveCount;
 extern int myStatus;
-extern int *tab;
+extern int *askTab;
 extern int noMembers;
 extern int entryCost;
 extern int noClubs;

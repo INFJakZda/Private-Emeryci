@@ -14,13 +14,13 @@ void mainLoop()
         approveCount = 0;
         myStatus = NO_GROUP;
         clubNumber = -1;
-        tab = calloc(noMembers, sizeof(int));
+        askTab = calloc(noMembers, sizeof(int));
 
         for (int i = 0; i < noMembers; i++)
         {
-            *(tab + i) = NOT_ASKED;
+            *(askTab + i) = NOT_ASKED;
             if (i == rank)
-                *(tab + i) = MY_GROUP;
+                *(askTab + i) = MY_GROUP;
         }
 
         data send;
@@ -74,7 +74,7 @@ void mainLoop()
             {
                 for (int i = 0; i < noMembers; i++)
                 {
-                    if (*(tab + i) == MY_GROUP && i != rank)
+                    if (*(askTab + i) == MY_GROUP && i != rank)
                     {
                         lamportClock++;
                         send = createPackage(lamportClock, GROUP_BREAK_MSG, rank, clubNumber, memberMoney);
@@ -112,7 +112,7 @@ void mainLoop()
                 {
                     for (int i = 0; i < noMembers; i++)
                     {
-                        if (*(tab + i) == MY_GROUP && i != rank)
+                        if (*(askTab + i) == MY_GROUP && i != rank)
                         {
                             lamportClock++;
                             send = createPackage(lamportClock, EXIT_CLUB_MSG, rank, clubNumber, memberMoney);
@@ -122,7 +122,7 @@ void mainLoop()
                     }
                     for (int i = 0; i < noMembers; i++)
                     {
-                        if (i != rank && *(tab + i) != MY_GROUP)
+                        if (i != rank && *(askTab + i) != MY_GROUP)
                         {
                             lamportClock++;
                             send = createPackage(lamportClock, ENTER_PERMISSION, rank, clubNumber, memberMoney);

@@ -30,7 +30,7 @@ bool isSomeoneToAsk()
 {
 	for (int i = 0; i < noMembers; i++)
 	{
-		if (*(tab + i) == 0)
+		if (*(askTab + i) == 0)
 		{
 			return true;
 		}
@@ -41,18 +41,18 @@ bool isSomeoneToAsk()
 int getRandomFreeElder()
 {
 	int rnd = rand() % noMembers;
-	if (*(tab + rnd) == 0)
+	if (*(askTab + rnd) == 0)
 		return rnd;
 	for (int i = rnd; i < noMembers; i++)
 	{
-		if (*(tab + i) == 0)
+		if (*(askTab + i) == 0)
 		{
 			return i;
 		}
 	}
 	for (int i = 0; i < noMembers; i++)
 	{
-		if (*(tab + i) == 0)
+		if (*(askTab + i) == 0)
 		{
 			return i;
 		}

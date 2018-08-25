@@ -45,7 +45,7 @@ void *ThreadBehavior()
         if (myStatus == FOUNDER && recv.message == GROUP_CONFIRMATION)
         {
             groupMoney += recv.memberMoney;
-            *(tab + recv.rank) = MY_GROUP;
+            *(askTab + recv.rank) = MY_GROUP;
             myStatus = ACCEPT_INVITE;
             printf("[%d][%ld]RANK: %d dalacza do grupy!\n", rank, lamportClock, recv.rank);
             printf("[%d][%ld]Jestem kapitanem, mamy na razie: %d a potrzeba %d pieniedzy.\n", rank, lamportClock, groupMoney, entryCost);
@@ -54,7 +54,7 @@ void *ThreadBehavior()
         //5
         if (myStatus == FOUNDER && recv.message == REJECT_INVITE_MSG)
         {
-            *(tab + recv.rank) = NOT_MY_GROUP;
+            *(askTab + recv.rank) = NOT_MY_GROUP;
             myStatus = REJECT_INVITE;
             printf("[%d][%ld]Odrzucenie proponowanej grupy od RANK: %d(jestem Kapitanem)\n", rank, lamportClock, recv.rank);
         }
@@ -103,7 +103,7 @@ void *ThreadBehavior()
         if (myStatus == NO_GROUP && recv.message == GROUP_CONFIRMATION)
         {
             myStatus = ACCEPT_INVITE;
-            *(tab + recv.rank) = MY_GROUP;
+            *(askTab + recv.rank) = MY_GROUP;
             groupMoney += recv.memberMoney;
             printf("[%d][%ld]RANK: %d dalacza do grupy!\n", rank, lamportClock, recv.rank);
             printf("[%d][%ld]Jestem kapitanem, mamy na razie: %d a potrzeba %d pieniedzy.\n", rank, lamportClock, groupMoney, entryCost);
@@ -113,7 +113,7 @@ void *ThreadBehavior()
         if (myStatus == NO_GROUP && recv.message == REJECT_INVITE_MSG)
         {
             myStatus = GROUP_BREAK;
-            *(tab + recv.rank) = NOT_MY_GROUP;
+            *(askTab + recv.rank) = NOT_MY_GROUP;
             printf("[%d][%ld]Moje zaproszenie zostalo odrzucone od RANK: %d\n", rank, lamportClock, recv.rank);
         }
 

@@ -5,7 +5,7 @@ int memberMoney;
 int groupMoney;
 int approveCount;
 int myStatus;
-int *tab;
+int *askTab;
 int noMembers;
 int entryCost;
 int noClubs;
