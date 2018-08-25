@@ -32,7 +32,7 @@
 //TAB
 #define READY_ASK_TAB 0
 #define ACCEPT_ASK_TAB 1
-#define NOT_MY_GROUP -1
+#define REJECT_ASK_TAB -1
 
 //TAG
 #define TAG 22

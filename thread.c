@@ -54,7 +54,7 @@ void *ThreadBehavior()
         //5
         if (myStatus == FOUNDER && recv.message == REJECT_INVITE_MSG)
         {
-            *(askTab + recv.rank) = NOT_MY_GROUP;
+            *(askTab + recv.rank) = REJECT_ASK_TAB;
             myStatus = REJECT_INVITE;
             printf("[%d][%ld]Odrzucenie proponowanej grupy od RANK: %d(jestem Kapitanem)\n", rank, lamportClock, recv.rank);
         }
@@ -113,7 +113,7 @@ void *ThreadBehavior()
         if (myStatus == NO_GROUP && recv.message == REJECT_INVITE_MSG)
         {
             myStatus = GROUP_BREAK;
-            *(askTab + recv.rank) = NOT_MY_GROUP;
+            *(askTab + recv.rank) = REJECT_ASK_TAB;
             printf("[%d][%ld]Moje zaproszenie zostalo odrzucone od RANK: %d\n", rank, lamportClock, recv.rank);
         }
 
