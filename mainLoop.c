@@ -18,7 +18,7 @@ void mainLoop()
 
         for (int i = 0; i < noMembers; i++)
         {
-            *(askTab + i) = NOT_ASKED;
+            *(askTab + i) = READY_ASK_TAB;
             if (i == rank)
                 *(askTab + i) = MY_GROUP;
         }

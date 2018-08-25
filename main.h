@@ -30,7 +30,7 @@
 #define EXIT_CLUB_MSG 6
 
 //TAB
-#define NOT_ASKED 0
+#define READY_ASK_TAB 0
 #define MY_GROUP 1
 #define NOT_MY_GROUP -1
 
