@@ -64,7 +64,7 @@ void *ThreadBehavior()
         {
             approveCount++;
             printf("[%d][%ld]Pozwolenie dla mnie na wejscie do klubu o nr: %d od RANK: %d\n", rank, lamportClock, clubNumber, recv.rank);
-            if (approveCount == N - 1)
+            if (approveCount == noMembers - 1)
             {
                 myStatus = ENTER_CLUB;
             }

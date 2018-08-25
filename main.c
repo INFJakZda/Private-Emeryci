@@ -6,7 +6,7 @@ int groupMoney;
 int approveCount;
 int myStatus;
 int *tab;
-int N;
+int noMembers;
 int M;
 int K;
 int clubNumber;
@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 
   MPI_Init(&argc, &argv);
 
-  MPI_Comm_size(MPI_COMM_WORLD, &N);
+  MPI_Comm_size(MPI_COMM_WORLD, &noMembers);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
   const int nitems = 5;

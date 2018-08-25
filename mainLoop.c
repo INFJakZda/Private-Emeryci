@@ -14,9 +14,9 @@ void mainLoop()
         approveCount = 0;
         myStatus = NO_GROUP;
         clubNumber = -1;
-        tab = calloc(N, sizeof(int));
+        tab = calloc(noMembers, sizeof(int));
 
-        for (int i = 0; i < N; i++)
+        for (int i = 0; i < noMembers; i++)
         {
             *(tab + i) = NOT_ASKED;
             if (i == rank)
@@ -72,7 +72,7 @@ void mainLoop()
             //Jeżeli za mało pieniędzy oznacza że zapytał wszystkich i nie da rady więc rozwiązuje grupę
             if (groupMoney < M && myStatus == FOUNDER)
             {
-                for (int i = 0; i < N; i++)
+                for (int i = 0; i < noMembers; i++)
                 {
                     if (*(tab + i) == MY_GROUP && i != rank)
                     {
@@ -91,7 +91,7 @@ void mainLoop()
                 myStatus = ENOUGH_MONEY;
                 clubNumber = rand() % K;
                 printf("[%d][%ld]        Wybralismy klub o nr: %d\n", rank, lamportClock, clubNumber);
-                for (int i = 0; i < N; i++)
+                for (int i = 0; i < noMembers; i++)
                 {
                     if (i != rank)
                     {
@@ -110,7 +110,7 @@ void mainLoop()
                 printf("[%d][%ld]       Mamy pozwolenie na wejscie do klubu o nr: %d\n", rank, lamportClock, clubNumber);
                 if (myStatus == ENTER_CLUB)
                 {
-                    for (int i = 0; i < N; i++)
+                    for (int i = 0; i < noMembers; i++)
                     {
                         if (*(tab + i) == MY_GROUP && i != rank)
                         {
@@ -120,7 +120,7 @@ void mainLoop()
                             printf("[%d][%ld]        Informacja --> Koniec imprezy dla RANK: %d\n", rank, lamportClock, i);
                         }
                     }
-                    for (int i = 0; i < N; i++)
+                    for (int i = 0; i < noMembers; i++)
                     {
                         if (i != rank && *(tab + i) != MY_GROUP)
                         {

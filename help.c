@@ -28,7 +28,7 @@ void createThread()
 
 bool isSomeoneToAsk()
 {
-	for (int i = 0; i < N; i++)
+	for (int i = 0; i < noMembers; i++)
 	{
 		if (*(tab + i) == 0)
 		{
@@ -40,17 +40,17 @@ bool isSomeoneToAsk()
 
 int getRandomFreeElder()
 {
-	int rnd = rand() % N;
+	int rnd = rand() % noMembers;
 	if (*(tab + rnd) == 0)
 		return rnd;
-	for (int i = rnd; i < N; i++)
+	for (int i = rnd; i < noMembers; i++)
 	{
 		if (*(tab + i) == 0)
 		{
 			return i;
 		}
 	}
-	for (int i = 0; i < N; i++)
+	for (int i = 0; i < noMembers; i++)
 	{
 		if (*(tab + i) == 0)
 		{
