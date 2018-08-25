@@ -41,7 +41,7 @@
 extern int memberMoney;
 extern int groupMoney;
 extern int approveCount;
-extern int status;
+extern int myStatus;
 extern int *tab;
 extern int N;
 extern int M;

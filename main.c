@@ -4,7 +4,7 @@
 int memberMoney;
 int groupMoney;
 int approveCount;
-int status;
+int myStatus;
 int *tab;
 int N;
 int M;

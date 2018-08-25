@@ -12,7 +12,7 @@ void mainLoop()
         memberMoney = rand() % (M - 2) + 1;
         groupMoney = memberMoney;
         approveCount = 0;
-        status = NO_GROUP;
+        myStatus = NO_GROUP;
         clubNumber = -1;
         tab = calloc(N, sizeof(int));
 
@@ -31,15 +31,15 @@ void mainLoop()
             int random = getRandomFreeElder();
             MPI_Send(&send, 1, mpi_data, random, TAG, MPI_COMM_WORLD);
             printf("[%d][%ld]        Zapytanie o dolaczenie do grupy dla RANK: %d\n", rank, lamportClock, random);
-            while (status == NO_GROUP || status == PARTICIPATOR || status == FOUNDER)
+            while (myStatus == NO_GROUP || myStatus == PARTICIPATOR || myStatus == FOUNDER)
             {
-                //waiting for status update
+                //waiting for myStatus update
             }
 
-            switch (status)
+            switch (myStatus)
             {
             case ACCEPT_INVITE:
-                status = FOUNDER;
+                myStatus = FOUNDER;
                 if (groupMoney >= M)
                 {
                     printf("[%d][%ld]        Mamy wystarczajaca ilosc pieniedzy(mamy: %d, wymagane: %d)! Przechodze do wyboru klubu. \n", rank, lamportClock, groupMoney, M);
@@ -48,12 +48,12 @@ void mainLoop()
                 break;
 
             case REJECT_INVITE:
-                status = FOUNDER;
+                myStatus = FOUNDER;
                 break;
 
             case GROUP_BREAK:
                 groupMoney = memberMoney;
-                status = NO_GROUP;
+                myStatus = NO_GROUP;
                 break;
 
             case EXIT_CLUB:
@@ -70,7 +70,7 @@ void mainLoop()
         if (!restart)
         {
             //Jeżeli za mało pieniędzy oznacza że zapytał wszystkich i nie da rady więc rozwiązuje grupę
-            if (groupMoney < M && status == FOUNDER)
+            if (groupMoney < M && myStatus == FOUNDER)
             {
                 for (int i = 0; i < N; i++)
                 {
@@ -85,10 +85,10 @@ void mainLoop()
             }
 
             //Jeżeli mamy siano i możemy ubiegać się o wejście
-            if (groupMoney >= M && status == FOUNDER)
+            if (groupMoney >= M && myStatus == FOUNDER)
             {
                 printf("[%d][%ld]        Wybieramy klub!\n", rank, lamportClock);
-                status = ENOUGH_MONEY;
+                myStatus = ENOUGH_MONEY;
                 clubNumber = rand() % K;
                 printf("[%d][%ld]        Wybralismy klub o nr: %d\n", rank, lamportClock, clubNumber);
                 for (int i = 0; i < N; i++)
@@ -102,13 +102,13 @@ void mainLoop()
                     }
                 }
                 printf("[%d][%ld]        Czekamy na pozwolenia na wejscie do klubu o nr: %d\n", rank, lamportClock, clubNumber);
-                while (status != ENTER_CLUB)
+                while (myStatus != ENTER_CLUB)
                 {
                     //waiting for perrmisions to go to club
                 }
 
                 printf("[%d][%ld]       Mamy pozwolenie na wejscie do klubu o nr: %d\n", rank, lamportClock, clubNumber);
-                if (status == ENTER_CLUB)
+                if (myStatus == ENTER_CLUB)
                 {
                     for (int i = 0; i < N; i++)
                     {
