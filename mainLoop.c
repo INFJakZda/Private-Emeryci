@@ -9,7 +9,7 @@ void mainLoop()
 
         sleep(rand() % 4); // Konieczny sleep bo się rozpierdala
 
-        memberMoney = rand() % (M - 2) + 1;
+        memberMoney = rand() % (entryCost - 2) + 1;
         groupMoney = memberMoney;
         approveCount = 0;
         myStatus = NO_GROUP;
@@ -40,9 +40,9 @@ void mainLoop()
             {
             case ACCEPT_INVITE:
                 myStatus = FOUNDER;
-                if (groupMoney >= M)
+                if (groupMoney >= entryCost)
                 {
-                    printf("[%d][%ld]        Mamy wystarczajaca ilosc pieniedzy(mamy: %d, wymagane: %d)! Przechodze do wyboru klubu. \n", rank, lamportClock, groupMoney, M);
+                    printf("[%d][%ld]        Mamy wystarczajaca ilosc pieniedzy(mamy: %d, wymagane: %d)! Przechodze do wyboru klubu. \n", rank, lamportClock, groupMoney, entryCost);
                     goto ExitWHILE;
                 }
                 break;
@@ -70,7 +70,7 @@ void mainLoop()
         if (!restart)
         {
             //Jeżeli za mało pieniędzy oznacza że zapytał wszystkich i nie da rady więc rozwiązuje grupę
-            if (groupMoney < M && myStatus == FOUNDER)
+            if (groupMoney < entryCost && myStatus == FOUNDER)
             {
                 for (int i = 0; i < noMembers; i++)
                 {
@@ -85,7 +85,7 @@ void mainLoop()
             }
 
             //Jeżeli mamy siano i możemy ubiegać się o wejście
-            if (groupMoney >= M && myStatus == FOUNDER)
+            if (groupMoney >= entryCost && myStatus == FOUNDER)
             {
                 printf("[%d][%ld]        Wybieramy klub!\n", rank, lamportClock);
                 myStatus = ENOUGH_MONEY;

@@ -7,7 +7,7 @@ int approveCount;
 int myStatus;
 int *tab;
 int noMembers;
-int M;
+int entryCost;
 int noClubs;
 int clubNumber;
 int rank;
@@ -16,7 +16,7 @@ MPI_Datatype mpi_data;
 
 int main(int argc, char *argv[])
 {
-  M = 100;
+  entryCost = 100;
   noClubs = 4;
 
   MPI_Init(&argc, &argv);

@@ -48,7 +48,7 @@ void *ThreadBehavior()
             *(tab + recv.rank) = MY_GROUP;
             myStatus = ACCEPT_INVITE;
             printf("[%d][%ld]RANK: %d dalacza do grupy!\n", rank, lamportClock, recv.rank);
-            printf("[%d][%ld]Jestem kapitanem, mamy na razie: %d a potrzeba %d pieniedzy.\n", rank, lamportClock, groupMoney, M);
+            printf("[%d][%ld]Jestem kapitanem, mamy na razie: %d a potrzeba %d pieniedzy.\n", rank, lamportClock, groupMoney, entryCost);
         }
 
         //5
@@ -106,7 +106,7 @@ void *ThreadBehavior()
             *(tab + recv.rank) = MY_GROUP;
             groupMoney += recv.memberMoney;
             printf("[%d][%ld]RANK: %d dalacza do grupy!\n", rank, lamportClock, recv.rank);
-            printf("[%d][%ld]Jestem kapitanem, mamy na razie: %d a potrzeba %d pieniedzy.\n", rank, lamportClock, groupMoney, M);
+            printf("[%d][%ld]Jestem kapitanem, mamy na razie: %d a potrzeba %d pieniedzy.\n", rank, lamportClock, groupMoney, entryCost);
         }
 
         //10

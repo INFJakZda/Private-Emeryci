@@ -44,7 +44,7 @@ extern int approveCount;
 extern int myStatus;
 extern int *tab;
 extern int noMembers;
-extern int M;
+extern int entryCost;
 extern int noClubs;
 extern int clubNumber;
 extern int rank;
