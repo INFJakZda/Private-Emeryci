@@ -9,8 +9,8 @@ void mainLoop()
 
         sleep(rand() % 4); // Konieczny sleep bo się rozpierdala
 
-        money = rand() % (M - 2) + 1;
-        groupMoney = money;
+        memberMoney = rand() % (M - 2) + 1;
+        groupMoney = memberMoney;
         approveCount = 0;
         status = NO_GROUP;
         clubNumber = -1;
@@ -27,7 +27,7 @@ void mainLoop()
         while (isSomeoneToAsk())
         {
             lamportClock++;
-            send = createPackage(lamportClock, GROUP_INVITE, rank, clubNumber, money);
+            send = createPackage(lamportClock, GROUP_INVITE, rank, clubNumber, memberMoney);
             int random = getRandomFreeElder();
             MPI_Send(&send, 1, mpi_data, random, TAG, MPI_COMM_WORLD);
             printf("[%d][%ld]        Zapytanie o dolaczenie do grupy dla RANK: %d\n", rank, lamportClock, random);
@@ -52,7 +52,7 @@ void mainLoop()
                 break;
 
             case GROUP_BREAK:
-                groupMoney = money;
+                groupMoney = memberMoney;
                 status = NO_GROUP;
                 break;
 
@@ -77,7 +77,7 @@ void mainLoop()
                     if (*(tab + i) == MY_GROUP && i != rank)
                     {
                         lamportClock++;
-                        send = createPackage(lamportClock, GROUP_BREAK_MSG, rank, clubNumber, money);
+                        send = createPackage(lamportClock, GROUP_BREAK_MSG, rank, clubNumber, memberMoney);
                         MPI_Send(&send, 1, mpi_data, i, TAG, MPI_COMM_WORLD); //Wyślij do wszystkich którzy są w mojej grupie (oprócz mnie)
                         printf("[%d][%ld]        Rozwiazanie grupy dla RANK: %d\n", rank, lamportClock, i);
                     }
@@ -96,7 +96,7 @@ void mainLoop()
                     if (i != rank)
                     {
                         lamportClock++;
-                        send = createPackage(lamportClock, ENTER_CLUB_QUERY, rank, clubNumber, money);
+                        send = createPackage(lamportClock, ENTER_CLUB_QUERY, rank, clubNumber, memberMoney);
                         MPI_Send(&send, 1, mpi_data, i, TAG, MPI_COMM_WORLD); //Wyślij do wszystkich zapytanie o wejście do klubu
                         printf("[%d][%ld]        Zapytanie o wejscie do klubu o nr: %d dla RANK: %d\n", rank, lamportClock, clubNumber, i);
                     }
@@ -115,7 +115,7 @@ void mainLoop()
                         if (*(tab + i) == MY_GROUP && i != rank)
                         {
                             lamportClock++;
-                            send = createPackage(lamportClock, EXIT_CLUB_MSG, rank, clubNumber, money);
+                            send = createPackage(lamportClock, EXIT_CLUB_MSG, rank, clubNumber, memberMoney);
                             MPI_Send(&send, 1, mpi_data, i, TAG, MPI_COMM_WORLD); //Wyślij do wszystkich którzy są w mojej grupie info o wyjściu z klubu
                             printf("[%d][%ld]        Informacja --> Koniec imprezy dla RANK: %d\n", rank, lamportClock, i);
                         }
@@ -125,7 +125,7 @@ void mainLoop()
                         if (i != rank && *(tab + i) != MY_GROUP)
                         {
                             lamportClock++;
-                            send = createPackage(lamportClock, ENTER_PERMISSION, rank, clubNumber, money);
+                            send = createPackage(lamportClock, ENTER_PERMISSION, rank, clubNumber, memberMoney);
                             MPI_Send(&send, 1, mpi_data, i, TAG, MPI_COMM_WORLD); //Wyślij do wszystkich info o możliwości wejścia do klubu w którym byliśmy
                             printf("[%d][%ld]        Pozwolenie na wejscie do naszego klubu (nr: %d) dla RANK: %d\n", rank, lamportClock, clubNumber, i);
                         }

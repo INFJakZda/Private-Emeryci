@@ -38,7 +38,7 @@
 #define TAG 22
 
 //ZMIENNE WPOLDZILEONE
-extern int money;
+extern int memberMoney;
 extern int groupMoney;
 extern int approveCount;
 extern int status;
@@ -57,7 +57,7 @@ typedef struct data_s
         int message;
         int rank;
         int clubNumber;
-        int money;
+        int memberMoney;
 } data;
 
 //BOOL

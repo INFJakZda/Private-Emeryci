@@ -8,7 +8,7 @@ data createPackage(int lC, int mcd, int rnk, int clubNum, int mny)
 	package.message = mcd;
 	package.rank = rnk;
 	package.clubNumber = clubNum;
-	package.money = mny;
+	package.memberMoney = mny;
 	return package;
 }
 

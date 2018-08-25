@@ -1,7 +1,7 @@
 #include "main.h"
 
 //ZMIENNE WPOLDZILEONE
-int money;
+int memberMoney;
 int groupMoney;
 int approveCount;
 int status;
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
   offsets[1] = offsetof(data, message);
   offsets[2] = offsetof(data, rank);
   offsets[3] = offsetof(data, clubNumber);
-  offsets[4] = offsetof(data, money);
+  offsets[4] = offsetof(data, memberMoney);
 
   MPI_Type_create_struct(nitems, blocklengths, offsets, types, &mpi_data);
   MPI_Type_commit(&mpi_data);
