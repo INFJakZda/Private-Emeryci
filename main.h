@@ -46,17 +46,17 @@ extern int *askTab;
 extern int noMembers;
 extern int entryCost;
 extern int noClubs;
-extern int clubNumber;
-extern int rank;
-extern long lamportClock; //dopisać inkrementowanie zegara
+extern int preferedClubId;
+extern int memberId;
+extern long localClock; //dopisać inkrementowanie zegara
 extern MPI_Datatype mpi_data;
 
 typedef struct data_s
 {
-    int lamportClock;
+    int localClock;
     int message;
-    int rank;
-    int clubNumber;
+    int memberId;
+    int preferedClubId;
     int memberMoney;
 } data;
 

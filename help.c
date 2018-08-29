@@ -1,14 +1,14 @@
 #include "main.h"
 
-data createPackage(int lamportClock, int message, int rank, int clubNumber, int memberMoney)
+data createPackage(int localClock, int message, int memberId, int preferedClubId, int memberMoney)
 {
     data package;
 
-    package.lamportClock = lC;
-    package.message = mcd;
-    package.rank = rnk;
-    package.clubNumber = clubNum;
-    package.memberMoney = mny;
+    package.localClock = localClock;
+    package.message = message;
+    package.memberId = memberId;
+    package.preferedClubId = preferedClubId;
+    package.memberMoney = memberMoney;
     return package;
 }
 
