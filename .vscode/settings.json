@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "system_error": "c",
+        "type_traits": "c",
+        "array": "c",
+        "string_view": "c"
+    }
+}
