@@ -53,19 +53,19 @@ extern MPI_Datatype mpi_data;
 
 typedef struct data_s
 {
-        int lamportClock;
-        int message;
-        int rank;
-        int clubNumber;
-        int memberMoney;
+    int lamportClock;
+    int message;
+    int rank;
+    int clubNumber;
+    int memberMoney;
 } data;
 
 //BOOL
 typedef int bool;
 enum
 {
-        false,
-        true
+    false,
+    true
 };
 
 //FUNCTIONS
