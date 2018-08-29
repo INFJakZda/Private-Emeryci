@@ -27,7 +27,7 @@ void mainLoop()
         while (isSomeoneToAsk())
         {
             lamportClock++;
-            send = createPackage(lamportClock, GROUP_INVITE, rank, clubNumber, memberMoney);
+            send = createPackage(lamportClock, ASK_TO_JOIN_MSG, rank, clubNumber, memberMoney);
             int random = getRandomFreeElder();
             MPI_Send(&send, 1, mpi_data, random, TAG, MPI_COMM_WORLD);
             printf("[%d][%ld]        Zapytanie o dolaczenie do grupy dla RANK: %d\n", rank, lamportClock, random);
@@ -96,7 +96,7 @@ void mainLoop()
                     if (i != rank)
                     {
                         lamportClock++;
-                        send = createPackage(lamportClock, ENTER_CLUB_QUERY, rank, clubNumber, memberMoney);
+                        send = createPackage(lamportClock, ASK_TO_ENTER_CLUB_MSG, rank, clubNumber, memberMoney);
                         MPI_Send(&send, 1, mpi_data, i, TAG, MPI_COMM_WORLD); //Wyślij do wszystkich zapytanie o wejście do klubu
                         printf("[%d][%ld]        Zapytanie o wejscie do klubu o nr: %d dla RANK: %d\n", rank, lamportClock, clubNumber, i);
                     }
@@ -125,7 +125,7 @@ void mainLoop()
                         if (i != rank && *(askTab + i) != ACCEPT_ASK_TAB)
                         {
                             lamportClock++;
-                            send = createPackage(lamportClock, ENTER_PERMISSION, rank, clubNumber, memberMoney);
+                            send = createPackage(lamportClock, AGREE_TO_ENTER_CLUB_MSG, rank, clubNumber, memberMoney);
                             MPI_Send(&send, 1, mpi_data, i, TAG, MPI_COMM_WORLD); //Wyślij do wszystkich info o możliwości wejścia do klubu w którym byliśmy
                             printf("[%d][%ld]        Pozwolenie na wejscie do naszego klubu (nr: %d) dla RANK: %d\n", rank, lamportClock, clubNumber, i);
                         }
