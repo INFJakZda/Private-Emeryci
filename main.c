@@ -41,6 +41,7 @@ int main(int argc, char *argv[])
     srand(time(0) + rank); //srand(time(NULL)) sprawdź
 
     createThread();
+    lamportClock = rand() % 4;
 
     mainLoop();
 

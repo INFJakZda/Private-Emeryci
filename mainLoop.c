@@ -2,19 +2,17 @@
 
 void mainLoop()
 {
-    lamportClock = rand() % 4;
-    sleep(lamportClock);
     while (true)
     {
         bool restart = false;
         //Zmienne wspoldzielone
 
-        //sleep(rand() % 4); // Konieczny sleep bo się rozpierdala
+        sleep(rand() % 4); // Konieczny sleep bo się rozpierdala
 
         memberMoney = rand() % (entryCost - 2) + 1;
         groupMoney = memberMoney;
         approveCount = 0;
-        myStatus = NO_GROUP;
+        myStatus = ALONE_STATUS;
         clubNumber = -1;
         askTab = calloc(noMembers, sizeof(int));
 
@@ -33,15 +31,15 @@ void mainLoop()
             int random = getRandomFreeElder();
             MPI_Send(&send, 1, mpi_data, random, TAG, MPI_COMM_WORLD);
             printf("[%d][%ld]        Zapytanie o dolaczenie do grupy dla RANK: %d\n", rank, lamportClock, random);
-            while (myStatus == NO_GROUP || myStatus == PARTICIPATOR || myStatus == FOUNDER)
+            while (myStatus == ALONE_STATUS || myStatus == MEMBER_STATUS || myStatus == LEADER_STATUS)
             {
                 //waiting for myStatus update
             }
 
             switch (myStatus)
             {
-            case ACCEPT_INVITE:
-                myStatus = FOUNDER;
+            case ACCEPT_INVITATION_STATUS:
+                myStatus = LEADER_STATUS;
                 if (groupMoney >= entryCost)
                 {
                     printf("[%d][%ld]        Mamy wystarczajaca ilosc pieniedzy(mamy: %d, wymagane: %d)! Przechodze do wyboru klubu. \n", rank, lamportClock, groupMoney, entryCost);
@@ -49,16 +47,16 @@ void mainLoop()
                 }
                 break;
 
-            case REJECT_INVITE:
-                myStatus = FOUNDER;
+            case REJECT_INVITATION_STATUS:
+                myStatus = LEADER_STATUS;
                 break;
 
-            case GROUP_BREAK:
+            case GROUP_BREAK_STATUS:
                 groupMoney = memberMoney;
-                myStatus = NO_GROUP;
+                myStatus = ALONE_STATUS;
                 break;
 
-            case EXIT_CLUB:
+            case EXIT_CLUB_STATUS:
                 printf("[%d][%ld]        Wychodze jako czlonek grupy z klubu o nr: %d\n", rank, lamportClock, clubNumber);
                 restart = true;
                 goto ExitWHILE;
@@ -72,7 +70,7 @@ void mainLoop()
         if (!restart)
         {
             //Jeżeli za mało pieniędzy oznacza że zapytał wszystkich i nie da rady więc rozwiązuje grupę
-            if (groupMoney < entryCost && myStatus == FOUNDER)
+            if (groupMoney < entryCost && myStatus == LEADER_STATUS)
             {
                 for (int i = 0; i < noMembers; i++)
                 {
@@ -87,10 +85,10 @@ void mainLoop()
             }
 
             //Jeżeli mamy siano i możemy ubiegać się o wejście
-            if (groupMoney >= entryCost && myStatus == FOUNDER)
+            if (groupMoney >= entryCost && myStatus == LEADER_STATUS)
             {
                 printf("[%d][%ld]        Wybieramy klub!\n", rank, lamportClock);
-                myStatus = ENOUGH_MONEY;
+                myStatus = ENOUGH_MONEY_STATUS;
                 clubNumber = rand() % noClubs;
                 printf("[%d][%ld]        Wybralismy klub o nr: %d\n", rank, lamportClock, clubNumber);
                 for (int i = 0; i < noMembers; i++)
@@ -104,13 +102,13 @@ void mainLoop()
                     }
                 }
                 printf("[%d][%ld]        Czekamy na pozwolenia na wejscie do klubu o nr: %d\n", rank, lamportClock, clubNumber);
-                while (myStatus != ENTER_CLUB)
+                while (myStatus != ENTER_CLUB_STATUS)
                 {
                     //waiting for perrmisions to go to club
                 }
 
                 printf("[%d][%ld]       Mamy pozwolenie na wejscie do klubu o nr: %d\n", rank, lamportClock, clubNumber);
-                if (myStatus == ENTER_CLUB)
+                if (myStatus == ENTER_CLUB_STATUS)
                 {
                     for (int i = 0; i < noMembers; i++)
                     {
@@ -137,6 +135,5 @@ void mainLoop()
                 printf("[%d][%ld]        Kapitan wychodzi z klubu o nr: %d\n", rank, lamportClock, clubNumber);
             }
         }
-        sleep(rand() % 4);
     }
 }

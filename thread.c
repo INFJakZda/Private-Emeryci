@@ -11,7 +11,7 @@ void *ThreadBehavior()
         lamportClock = max(recv.lamportClock, lamportClock) + 1;
 
         //2
-        if (myStatus == ENOUGH_MONEY && recv.message == ENTER_CLUB_QUERY)
+        if (myStatus == ENOUGH_MONEY_STATUS && recv.message == ENTER_CLUB_QUERY)
         {
             if (recv.clubNumber != clubNumber)
             {
@@ -33,7 +33,7 @@ void *ThreadBehavior()
         }
 
         //3
-        if ((myStatus != NO_GROUP && myStatus != GROUP_BREAK) && recv.message == GROUP_INVITE)
+        if ((myStatus != ALONE_STATUS && myStatus != GROUP_BREAK_STATUS) && recv.message == GROUP_INVITE)
         {
             lamportClock++;
             send = createPackage(lamportClock, REJECT_INVITE_MSG, rank, clubNumber, memberMoney);
@@ -42,36 +42,36 @@ void *ThreadBehavior()
         }
 
         //4
-        if (myStatus == FOUNDER && recv.message == GROUP_CONFIRMATION)
+        if (myStatus == LEADER_STATUS && recv.message == GROUP_CONFIRMATION)
         {
             groupMoney += recv.memberMoney;
             *(askTab + recv.rank) = ACCEPT_ASK_TAB;
-            myStatus = ACCEPT_INVITE;
+            myStatus = ACCEPT_INVITATION_STATUS;
             printf("[%d][%ld]RANK: %d dalacza do grupy!\n", rank, lamportClock, recv.rank);
             printf("[%d][%ld]Jestem kapitanem, mamy na razie: %d a potrzeba %d pieniedzy.\n", rank, lamportClock, groupMoney, entryCost);
         }
 
         //5
-        if (myStatus == FOUNDER && recv.message == REJECT_INVITE_MSG)
+        if (myStatus == LEADER_STATUS && recv.message == REJECT_INVITE_MSG)
         {
             *(askTab + recv.rank) = REJECT_ASK_TAB;
-            myStatus = REJECT_INVITE;
+            myStatus = REJECT_INVITATION_STATUS;
             printf("[%d][%ld]Odrzucenie proponowanej grupy od RANK: %d(jestem Kapitanem)\n", rank, lamportClock, recv.rank);
         }
 
         //6
-        if (myStatus == ENOUGH_MONEY && recv.message == ENTER_PERMISSION)
+        if (myStatus == ENOUGH_MONEY_STATUS && recv.message == ENTER_PERMISSION)
         {
             approveCount++;
             printf("[%d][%ld]Pozwolenie dla mnie na wejscie do klubu o nr: %d od RANK: %d\n", rank, lamportClock, clubNumber, recv.rank);
             if (approveCount == noMembers - 1)
             {
-                myStatus = ENTER_CLUB;
+                myStatus = ENTER_CLUB_STATUS;
             }
         }
 
         //7
-        if (myStatus != ENOUGH_MONEY && myStatus != ENTER_CLUB && recv.message == ENTER_CLUB_QUERY)
+        if (myStatus != ENOUGH_MONEY_STATUS && myStatus != ENTER_CLUB_STATUS && recv.message == ENTER_CLUB_QUERY)
         {
             lamportClock++;
             send = createPackage(lamportClock, ENTER_PERMISSION, rank, clubNumber, memberMoney);
@@ -80,11 +80,11 @@ void *ThreadBehavior()
         }
 
         //8
-        if ((myStatus == NO_GROUP || myStatus == GROUP_BREAK) && recv.message == GROUP_INVITE)
+        if ((myStatus == ALONE_STATUS || myStatus == GROUP_BREAK_STATUS) && recv.message == GROUP_INVITE)
         {
             if (recv.lamportClock < lamportClock)
             {
-                myStatus = PARTICIPATOR;
+                myStatus = MEMBER_STATUS;
                 lamportClock++;
                 send = createPackage(lamportClock, GROUP_CONFIRMATION, rank, clubNumber, memberMoney);
                 MPI_Send(&send, 1, mpi_data, recv.rank, TAG, MPI_COMM_WORLD);
@@ -100,9 +100,9 @@ void *ThreadBehavior()
         }
 
         //9
-        if (myStatus == NO_GROUP && recv.message == GROUP_CONFIRMATION)
+        if (myStatus == ALONE_STATUS && recv.message == GROUP_CONFIRMATION)
         {
-            myStatus = ACCEPT_INVITE;
+            myStatus = ACCEPT_INVITATION_STATUS;
             *(askTab + recv.rank) = ACCEPT_ASK_TAB;
             groupMoney += recv.memberMoney;
             printf("[%d][%ld]RANK: %d dalacza do grupy!\n", rank, lamportClock, recv.rank);
@@ -110,15 +110,15 @@ void *ThreadBehavior()
         }
 
         //10
-        if (myStatus == NO_GROUP && recv.message == REJECT_INVITE_MSG)
+        if (myStatus == ALONE_STATUS && recv.message == REJECT_INVITE_MSG)
         {
-            myStatus = GROUP_BREAK;
+            myStatus = GROUP_BREAK_STATUS;
             *(askTab + recv.rank) = REJECT_ASK_TAB;
             printf("[%d][%ld]Moje zaproszenie zostalo odrzucone od RANK: %d\n", rank, lamportClock, recv.rank);
         }
 
         //11
-        if (myStatus == PARTICIPATOR && recv.message == GROUP_CONFIRMATION)
+        if (myStatus == MEMBER_STATUS && recv.message == GROUP_CONFIRMATION)
         {
             lamportClock++;
             send = createPackage(lamportClock, GROUP_BREAK_MSG, rank, clubNumber, memberMoney);
@@ -127,9 +127,9 @@ void *ThreadBehavior()
         }
 
         //12
-        if (myStatus == PARTICIPATOR && recv.message == GROUP_BREAK_MSG)
+        if (myStatus == MEMBER_STATUS && recv.message == GROUP_BREAK_MSG)
         {
-            myStatus = GROUP_BREAK;
+            myStatus = GROUP_BREAK_STATUS;
             printf("[%d][%ld]Grupa zostala rozwiazana przez RANK: %d!\n", rank, lamportClock, recv.rank);
         }
 
@@ -138,11 +138,11 @@ void *ThreadBehavior()
         {
             clubNumber = recv.clubNumber;
             printf("[%d][%ld]        Wychodze z klubu jako czlonek grupy! Nr klubu: %d\n", rank, lamportClock, clubNumber);
-            myStatus = EXIT_CLUB;
+            myStatus = EXIT_CLUB_STATUS;
         }
 
         //14
-        if (myStatus == ENTER_CLUB && recv.message == ENTER_CLUB_QUERY)
+        if (myStatus == ENTER_CLUB_STATUS && recv.message == ENTER_CLUB_QUERY)
         {
             if (recv.clubNumber != clubNumber)
             {

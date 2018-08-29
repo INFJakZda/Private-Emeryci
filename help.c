@@ -4,11 +4,11 @@ data createPackage(int lamportClock, int message, int rank, int clubNumber, int 
 {
     data package;
 
-    package.lamportClock = lamportClock;
-    package.message = message;
-    package.rank = rank;
-    package.clubNumber = clubNumber;
-    package.memberMoney = memberMoney;
+    package.lamportClock = lC;
+    package.message = mcd;
+    package.rank = rnk;
+    package.clubNumber = clubNum;
+    package.memberMoney = mny;
     return package;
 }
 
