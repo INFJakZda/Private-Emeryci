@@ -7,7 +7,7 @@ void mainLoop()
         bool restart = false;
         //Zmienne wspoldzielone
 
-        sleep(rand() % 4); // Konieczny sleep bo się rozpierdala
+        sleep(rand() % noMembers);
 
         memberMoney = rand() % (entryCost - 2) + 1;
         groupMoney = memberMoney;
