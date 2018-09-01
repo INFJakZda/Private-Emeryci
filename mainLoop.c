@@ -23,13 +23,13 @@ void mainLoop()
                 *(askTab + i) = ACCEPT_ASK_TAB;
         }
 
-        data send;
+        msg sendMsg;
         while (isSomeoneToAsk())
         {
             localClock++;
-            send = createPackage(localClock, ASK_TO_JOIN_MSG, memberId, preferedClubId, memberMoney);
+            sendMsg = createPackage(localClock, ASK_TO_JOIN_MSG, memberId, preferedClubId, memberMoney);
             int random = getRandomFreeElder();
-            MPI_Send(&send, 1, mpi_data, random, TAG, MPI_COMM_WORLD);
+            MPI_Send(&sendMsg, 1, mpiMsgType, random, TAG, MPI_COMM_WORLD);
             printf("[%d][%ld]        Zapytanie o dolaczenie do grupy dla RANK: %d\n", memberId, localClock, random);
             while (myStatus == ALONE_STATUS || myStatus == MEMBER_STATUS || myStatus == LEADER_STATUS)
             {
@@ -77,8 +77,8 @@ void mainLoop()
                     if (*(askTab + i) == ACCEPT_ASK_TAB && i != memberId)
                     {
                         localClock++;
-                        send = createPackage(localClock, GROUP_BREAK_MSG, memberId, preferedClubId, memberMoney);
-                        MPI_Send(&send, 1, mpi_data, i, TAG, MPI_COMM_WORLD); //Wyślij do wszystkich którzy są w mojej grupie (oprócz mnie)
+                        sendMsg = createPackage(localClock, GROUP_BREAK_MSG, memberId, preferedClubId, memberMoney);
+                        MPI_Send(&sendMsg, 1, mpiMsgType, i, TAG, MPI_COMM_WORLD); //Wyślij do wszystkich którzy są w mojej grupie (oprócz mnie)
                         printf("[%d][%ld]        Rozwiazanie grupy dla RANK: %d\n", memberId, localClock, i);
                     }
                 }
@@ -96,8 +96,8 @@ void mainLoop()
                     if (i != memberId)
                     {
                         localClock++;
-                        send = createPackage(localClock, ASK_TO_ENTER_CLUB_MSG, memberId, preferedClubId, memberMoney);
-                        MPI_Send(&send, 1, mpi_data, i, TAG, MPI_COMM_WORLD); //Wyślij do wszystkich zapytanie o wejście do klubu
+                        sendMsg = createPackage(localClock, ASK_TO_ENTER_CLUB_MSG, memberId, preferedClubId, memberMoney);
+                        MPI_Send(&sendMsg, 1, mpiMsgType, i, TAG, MPI_COMM_WORLD); //Wyślij do wszystkich zapytanie o wejście do klubu
                         printf("[%d][%ld]        Zapytanie o wejscie do klubu o nr: %d dla RANK: %d\n", memberId, localClock, preferedClubId, i);
                     }
                 }
@@ -115,8 +115,8 @@ void mainLoop()
                         if (*(askTab + i) == ACCEPT_ASK_TAB && i != memberId)
                         {
                             localClock++;
-                            send = createPackage(localClock, EXIT_CLUB_MSG, memberId, preferedClubId, memberMoney);
-                            MPI_Send(&send, 1, mpi_data, i, TAG, MPI_COMM_WORLD); //Wyślij do wszystkich którzy są w mojej grupie info o wyjściu z klubu
+                            sendMsg = createPackage(localClock, EXIT_CLUB_MSG, memberId, preferedClubId, memberMoney);
+                            MPI_Send(&sendMsg, 1, mpiMsgType, i, TAG, MPI_COMM_WORLD); //Wyślij do wszystkich którzy są w mojej grupie info o wyjściu z klubu
                             printf("[%d][%ld]        Informacja --> Koniec imprezy dla RANK: %d\n", memberId, localClock, i);
                         }
                     }
@@ -125,8 +125,8 @@ void mainLoop()
                         if (i != memberId && *(askTab + i) != ACCEPT_ASK_TAB)
                         {
                             localClock++;
-                            send = createPackage(localClock, AGREE_TO_ENTER_CLUB_MSG, memberId, preferedClubId, memberMoney);
-                            MPI_Send(&send, 1, mpi_data, i, TAG, MPI_COMM_WORLD); //Wyślij do wszystkich info o możliwości wejścia do klubu w którym byliśmy
+                            sendMsg = createPackage(localClock, AGREE_TO_ENTER_CLUB_MSG, memberId, preferedClubId, memberMoney);
+                            MPI_Send(&sendMsg, 1, mpiMsgType, i, TAG, MPI_COMM_WORLD); //Wyślij do wszystkich info o możliwości wejścia do klubu w którym byliśmy
                             printf("[%d][%ld]        Pozwolenie na wejscie do naszego klubu (nr: %d) dla RANK: %d\n", memberId, localClock, preferedClubId, i);
                         }
                     }

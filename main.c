@@ -12,7 +12,7 @@ int noClubs;
 int preferedClubId;
 int memberId;
 long localClock;
-MPI_Datatype mpi_data;
+MPI_Datatype mpiMsgType;
 
 int main(int argc, char *argv[])
 {
@@ -29,14 +29,14 @@ int main(int argc, char *argv[])
     MPI_Datatype types[5] = {MPI_INT, MPI_INT, MPI_INT, MPI_INT, MPI_INT};
     MPI_Aint offsets[5];
 
-    offsets[0] = offsetof(data, localClock);
-    offsets[1] = offsetof(data, message);
-    offsets[2] = offsetof(data, memberId);
-    offsets[3] = offsetof(data, preferedClubId);
-    offsets[4] = offsetof(data, memberMoney);
+    offsets[0] = offsetof(msg, localClock);
+    offsets[1] = offsetof(msg, message);
+    offsets[2] = offsetof(msg, memberId);
+    offsets[3] = offsetof(msg, preferedClubId);
+    offsets[4] = offsetof(msg, memberMoney);
 
-    MPI_Type_create_struct(nitems, blocklengths, offsets, types, &mpi_data);
-    MPI_Type_commit(&mpi_data);
+    MPI_Type_create_struct(nitems, blocklengths, offsets, types, &mpiMsgType);
+    MPI_Type_commit(&mpiMsgType);
 
     srand(time(0) + memberId); //srand(time(NULL)) sprawdź
 
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 
     mainLoop();
 
-    MPI_Type_free(&mpi_data);
+    MPI_Type_free(&mpiMsgType);
     MPI_Finalize();
 
     return 0;

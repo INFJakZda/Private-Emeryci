@@ -49,16 +49,16 @@ extern int noClubs;
 extern int preferedClubId;
 extern int memberId;
 extern long localClock; //dopisać inkrementowanie zegara
-extern MPI_Datatype mpi_data;
+extern MPI_Datatype mpiMsgType;
 
-typedef struct data_s
+typedef struct msg_s
 {
     int localClock;
     int message;
     int memberId;
     int preferedClubId;
     int memberMoney;
-} data;
+} msg;
 
 //BOOL
 typedef int bool;
@@ -75,6 +75,6 @@ int getRandomFreeElder();
 int max(int, int);
 void *ThreadBehavior();
 void mainLoop();
-data createPackage(int, int, int, int, int);
+msg createPackage(int, int, int, int, int);
 
 #endif
