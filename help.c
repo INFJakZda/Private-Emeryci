@@ -1,8 +1,8 @@
 #include "main.h"
 
-data createPackage(int localClock, int message, int memberId, int preferedClubId, int memberMoney)
+msg createPackage(int localClock, int message, int memberId, int preferedClubId, int memberMoney)
 {
-    data package;
+    msg package;
 
     package.localClock = localClock;
     package.message = message;
