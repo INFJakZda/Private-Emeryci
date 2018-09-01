@@ -32,7 +32,7 @@ void mainLoop()
                 sendMsg = createPackage(localClock, ASK_TO_JOIN_MSG, memberId, preferedClubId, memberMoney);
                 int random = getRandomFreeElder();
                 MPI_Send(&sendMsg, 1, mpiMsgType, random, TAG, MPI_COMM_WORLD);
-                printf("[myId: %d][clock: %d][to:   %d] Zapytanie o dolaczenie do grupy {%d}\n", memberId, localClock, selectedMember, myStatus);
+                printf("[myId: %d][clock: %d][to:   %d] Zapytanie o dolaczenie do grupy {%d}\n", memberId, localClock, random, myStatus);
             }
 
             while (myStatus == ALONE_STATUS || myStatus == MEMBER_STATUS || myStatus == LEADER_STATUS)
@@ -83,7 +83,7 @@ void mainLoop()
                         localClock++;
                         sendMsg = createPackage(localClock, GROUP_BREAK_MSG, memberId, preferedClubId, memberMoney);
                         MPI_Send(&sendMsg, 1, mpiMsgType, i, TAG, MPI_COMM_WORLD); //Wyślij do wszystkich którzy są w mojej grupie (oprócz mnie)
-                        printf("[myId: %d][clock: %d]        Rozwiazanie grupy dla RANK: %d {%d}\n", memberId, localClock, i, myStatus);
+                        printf("[myId: %d][clock: %d][to:   %d] Rozwiazanie grupy {%d}\n", memberId, localClock, i, myStatus);
                     }
                 }
             }
@@ -102,7 +102,7 @@ void mainLoop()
                         localClock++;
                         sendMsg = createPackage(localClock, ASK_TO_ENTER_CLUB_MSG, memberId, preferedClubId, memberMoney);
                         MPI_Send(&sendMsg, 1, mpiMsgType, i, TAG, MPI_COMM_WORLD); //Wyślij do wszystkich zapytanie o wejście do klubu
-                        printf("[myId: %d][clock: %d]           Zapytanie o wejscie do klubu o nr: %d dla RANK: %d {%d}\n", memberId, localClock, preferedClubId, i, myStatus);
+                        printf("[myId: %d][clock: %d][to:   %d] Zapytanie o wejscie do klubu o nr: %d {%d}\n", memberId, localClock, i, preferedClubId, myStatus);
                     }
                 }
                 printf("[myId: %d][clock: %d]           Czekamy na pozwolenia na wejscie do klubu o nr: %d {%d}\n", memberId, localClock, preferedClubId, myStatus);
@@ -111,7 +111,7 @@ void mainLoop()
                     //waiting for perrmisions to go to club
                 }
 
-                printf("[myId: %d][clock: %d]       Mamy pozwolenie na wejscie do klubu o nr: %d {%d}\n", memberId, localClock, preferedClubId, myStatus);
+                printf("[myId: %d][clock: %d]           Mamy pozwolenie na wejscie do klubu o nr: %d {%d}\n", memberId, localClock, preferedClubId, myStatus);
                 if (myStatus == ENTER_CLUB_STATUS)
                 {
                     for (int i = 0; i < noMembers; i++)
@@ -121,7 +121,7 @@ void mainLoop()
                             localClock++;
                             sendMsg = createPackage(localClock, EXIT_CLUB_MSG, memberId, preferedClubId, memberMoney);
                             MPI_Send(&sendMsg, 1, mpiMsgType, i, TAG, MPI_COMM_WORLD); //Wyślij do wszystkich którzy są w mojej grupie info o wyjściu z klubu
-                            printf("[myId: %d][clock: %d]        Informacja --> Koniec imprezy dla RANK: %d {%d}\n", memberId, localClock, i, myStatus);
+                            printf("[myId: %d][clock: %d][to:   %d] Informacja --> Koniec imprezy {%d}\n", memberId, localClock, i, myStatus);
                         }
                     }
                     for (int i = 0; i < noMembers; i++)
@@ -131,12 +131,12 @@ void mainLoop()
                             localClock++;
                             sendMsg = createPackage(localClock, AGREE_TO_ENTER_CLUB_MSG, memberId, preferedClubId, memberMoney);
                             MPI_Send(&sendMsg, 1, mpiMsgType, i, TAG, MPI_COMM_WORLD); //Wyślij do wszystkich info o możliwości wejścia do klubu w którym byliśmy
-                            printf("[myId: %d][clock: %d]        Pozwolenie na wejscie do naszego klubu (nr: %d) dla RANK: %d {%d}\n", memberId, localClock, preferedClubId, i, myStatus);
+                            printf("[myId: %d][clock: %d][to:   %d] Pozwolenie na wejscie do naszego klubu (nr: %d) {%d}\n", memberId, localClock, i, preferedClubId, myStatus);
                         }
                     }
                 }
 
-                printf("[myId: %d][clock: %d]        Kapitan wychodzi z klubu o nr: %d {%d}\n", memberId, localClock, preferedClubId, myStatus);
+                printf("[myId: %d][clock: %d]           Kapitan wychodzi z klubu o nr: %d {%d}\n", memberId, localClock, preferedClubId, myStatus);
 
             }
             //EXIT CLUBS IN DIFFERERNT TIME

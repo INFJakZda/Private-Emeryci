@@ -19,7 +19,7 @@ void *ThreadBehavior()
                 localClock++;
                 sendMsg = createPackage(localClock, AGREE_TO_ENTER_CLUB_MSG, memberId, preferedClubId, memberMoney);
                 MPI_Send(&sendMsg, 1, mpiMsgType, recvMsg.memberId, TAG, MPI_COMM_WORLD);
-                printf("[myId: %d][clock: %d][to: %d]   Pozwolenie na wejscie do klubu o nr: %d {%d}\n", memberId, localClock, recvMsg.memberId, recvMsg.preferedClubId, myStatus);
+                printf("[myId: %d][clock: %d][to:   %d] Pozwolenie na wejscie do klubu o nr: %d {%d}\n", memberId, localClock, recvMsg.memberId, recvMsg.preferedClubId, myStatus);
             }
             else
             {
@@ -28,7 +28,7 @@ void *ThreadBehavior()
                     localClock++;
                     sendMsg = createPackage(localClock, AGREE_TO_ENTER_CLUB_MSG, memberId, preferedClubId, memberMoney);
                     MPI_Send(&sendMsg, 1, mpiMsgType, recvMsg.memberId, TAG, MPI_COMM_WORLD);
-                    printf("[myId: %d][clock: %d][to: %d]   Pozwolenie na wejscie do klubu o nr: %d {%d}\n", memberId, localClock, recvMsg.memberId, recvMsg.preferedClubId, myStatus);
+                    printf("[myId: %d][clock: %d][to:   %d] Pozwolenie na wejscie do klubu o nr: %d {%d}\n", memberId, localClock, recvMsg.memberId, recvMsg.preferedClubId, myStatus);
                 }
             }
         }
@@ -39,7 +39,7 @@ void *ThreadBehavior()
             localClock++;
             sendMsg = createPackage(localClock, REJECT_JOIN_MSG, memberId, preferedClubId, memberMoney);
             MPI_Send(&sendMsg, 1, mpiMsgType, recvMsg.memberId, TAG, MPI_COMM_WORLD);
-            printf("[myId: %d][clock: %d][to: %d]   Odrzucenie zaproszenia do grupy {%d}\n", memberId, localClock, recvMsg.memberId, myStatus);
+            printf("[myId: %d][clock: %d][to:   %d] Odrzucenie zaproszenia do grupy {%d}\n", memberId, localClock, recvMsg.memberId, myStatus);
         }
 
         //4 i //9
@@ -76,7 +76,7 @@ void *ThreadBehavior()
             localClock++;
             sendMsg = createPackage(localClock, AGREE_TO_ENTER_CLUB_MSG, memberId, preferedClubId, memberMoney);
             MPI_Send(&sendMsg, 1, mpiMsgType, recvMsg.memberId, TAG, MPI_COMM_WORLD);
-            printf("[myId: %d][clock: %d][to: %d]   Pozwolenie na wejscie do klubu o nr: %d {%d}\n", memberId, localClock, recvMsg.memberId, recvMsg.preferedClubId, myStatus);
+            printf("[myId: %d][clock: %d][to:   %d] Pozwolenie na wejscie do klubu o nr: %d {%d}\n", memberId, localClock, recvMsg.memberId, recvMsg.preferedClubId, myStatus);
         }
 
         //8 TODO what that?!?! if elses every time localClock will be higher than recvMsg.localClock becouse we take max() + 1 to localClock
@@ -88,14 +88,14 @@ void *ThreadBehavior()
                 localClock++;
                 sendMsg = createPackage(localClock, CONFIRM_JOIN_MSG, memberId, preferedClubId, memberMoney);
                 MPI_Send(&sendMsg, 1, mpiMsgType, recvMsg.memberId, TAG, MPI_COMM_WORLD);
-                printf("[myId: %d][clock: %d][to: %d]   Akceptuje zaproszenie do grupy {%d} \n", memberId, localClock, recvMsg.memberId, myStatus);
+                printf("[myId: %d][clock: %d][to:   %d] Akceptuje zaproszenie do grupy {%d} \n", memberId, localClock, recvMsg.memberId, myStatus);
             }
             else
             {
                 localClock++;
                 sendMsg = createPackage(localClock, REJECT_JOIN_MSG, memberId, preferedClubId, memberMoney);
                 MPI_Send(&sendMsg, 1, mpiMsgType, recvMsg.memberId, TAG, MPI_COMM_WORLD);
-                printf("[myId: %d][clock: %d][to: %d]   Odrzucam zaproszenie do grupy {%d} \n", memberId, localClock, recvMsg.memberId, myStatus);
+                printf("[myId: %d][clock: %d][to:   %d] Odrzucam zaproszenie do grupy {%d} \n", memberId, localClock, recvMsg.memberId, myStatus);
             }
         }
 
@@ -140,7 +140,7 @@ void *ThreadBehavior()
                 localClock++;
                 sendMsg = createPackage(localClock, AGREE_TO_ENTER_CLUB_MSG, memberId, preferedClubId, memberMoney);
                 MPI_Send(&sendMsg, 1, mpiMsgType, recvMsg.memberId, TAG, MPI_COMM_WORLD);
-                printf("[myId: %d][clock: %d][to: %d]   Pozwolenie na wejscie do klubu o nr: %d {%d}\n", memberId, localClock, recvMsg.memberId, recvMsg.preferedClubId, myStatus);
+                printf("[myId: %d][clock: %d][to:   %d] Pozwolenie na wejscie do klubu o nr: %d {%d}\n", memberId, localClock, recvMsg.memberId, recvMsg.preferedClubId, myStatus);
             }
         }
     }

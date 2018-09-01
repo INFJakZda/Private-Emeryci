@@ -11,7 +11,7 @@ int entryCost;
 int noClubs;
 int preferedClubId;
 int memberId;
-long localClock;
+int localClock;
 MPI_Datatype mpiMsgType;
 
 int main(int argc, char *argv[])

@@ -48,7 +48,7 @@ extern int entryCost;
 extern int noClubs;
 extern int preferedClubId;
 extern int memberId;
-extern long localClock; //dopisać inkrementowanie zegara
+extern int localClock; //dopisać inkrementowanie zegara
 extern MPI_Datatype mpiMsgType;
 
 typedef struct msg_s
