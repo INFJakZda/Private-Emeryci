@@ -16,6 +16,8 @@ void mainLoop()
         preferedClubId = -1;
         askTab = calloc(noMembers, sizeof(int));
 
+        printf("[myId: %d][clock: %d]           my memberMoney = %d\n", memberId, localClock, memberMoney);
+
         for (int i = 0; i < noMembers; i++)
         {
             *(askTab + i) = READY_ASK_TAB;
